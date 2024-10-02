@@ -1,0 +1,28 @@
+
+1.  Requirements have been baselined but continue to change 
+
+        Communicate with SBS to determine specifications. 
+
+2.  Personnel need extra time to learn unfamiliar software tools or environment 
+
+        Develop a basic add-on that communicates with an API as a proof of concept. 
+
+3.  Customer communication time (e.g., time to answer requirements-clarification 
+
+    questions) is slower than expected 
+
+        Establish regular communication channel with SBS and keep them informed of our progress. Be proactive 
+
+4.  Development of extra software functions that are not required (gold-plating) 
+
+    extends the schedule 
+
+        Work on minimum viable product before implementing gold-plating 
+
+5.  Requirements for interfacing with other systems, other complex systems, or other 
+
+    systems that are not under the team’s control result in unforeseen design, 
+
+    implementation, and testing 
+
+         
