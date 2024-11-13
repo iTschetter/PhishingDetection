@@ -5,7 +5,8 @@
 
 /* global document, Office */
 
-const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
+
+const GEMINI_API_KEY = DEV_API_KEY;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
@@ -19,17 +20,8 @@ Office.onReady((info) => {
 
 async function analyze(emailContent, metadata) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro",
-    safetySettings: [
-        {
-          category: "HARM_CATEGORY_DANGEROUS",
-          threshold: "BLOCK_NONE"
-        },
-        {
-          category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-          threshold: "BLOCK_NONE"
-        }
-      ] 
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
     });
 
     const prompt = `
@@ -49,9 +41,9 @@ async function analyze(emailContent, metadata) {
      ${emailContent}
      `;
 
-     const result = await model.generalContent(prompt);
-     const response = await result.response;
-     return response.text();
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
   } catch (error) {
     console.error("Error: ", error);
     return "Error analyzing email";
@@ -68,7 +60,7 @@ export async function run() {
   const metadata = {
     sender: item.from?.emailAddress,
     subject: item.subject,
-    hasAttachments: item.attachments.length > 0
+    hasAttachments: item.attachments.length > 0,
   };
 
   Office.context.mailbox.item.body.getAsync(
@@ -80,14 +72,13 @@ export async function run() {
       let insertAt = document.getElementById("item-subject");
       let label = document.createElement("b").appendChild(document.createTextNode("Subject: "));
       insertAt.appendChild(label);
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(result.value));
-      insertAt.appendChild(document.createElement("br"));
 
       const results = await analyze(result.value, metadata);
+      insertAt.appendChild(document.createElement("br"));
+      insertAt.appendChild(document.createTextNode(results));
+      insertAt.appendChild(document.createElement("br"));
 
       // DO SOMETHING WITH RESULTS
-
     }
   );
 }
