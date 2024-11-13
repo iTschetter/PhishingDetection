@@ -19,7 +19,18 @@ Office.onReady((info) => {
 
 async function analyze(emailContent, metadata) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro",
+    safetySettings: [
+        {
+          category: "HARM_CATEGORY_DANGEROUS",
+          threshold: "BLOCK_NONE"
+        },
+        {
+          category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+          threshold: "BLOCK_NONE"
+        }
+      ] 
+    });
 
     const prompt = `
     You are a cybersecurity expert analyzing an email for phishing attempts.
