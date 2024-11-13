@@ -5,6 +5,10 @@
 
 /* global document, Office */
 
+const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -12,6 +16,34 @@ Office.onReady((info) => {
     document.getElementById("run").onclick = run;
   }
 });
+
+async function analyze(emailContent, metadata) {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const prompt = `
+    You are a cybersecurity expert analyzing an email for phishing attempts.
+    Analyze the following email content and metadata for signs of phishing.
+    Provide your response in the following format:
+    - Confidence Score: (0-100, where 100 is definitely phishing)
+    - Suspicious Elements: (bullet point list)
+    - Reasoning: (brief explanation)
+
+     Email Metadata:
+     ${JSON.stringify(metadata, null, 2)}
+
+     Email Content:
+     ${emailContent}
+     `;
+
+     const result = await model.generalContent(prompt);
+     const response = await result.response;
+     return response.text();
+  } catch (error) {
+    console.error("Error: ", error);
+    return "Error analyzing email";
+  }
+}
 
 export async function run() {
   /**
