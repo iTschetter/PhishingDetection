@@ -29,6 +29,8 @@ async function analyze(emailContent, metadata) {
     - Suspicious Elements: (bullet point list)
     - Reasoning: (brief explanation)
 
+    Please response with a JSON object with no additional text. The JSON elements should be the three items previously listed.
+
      Email Metadata:
      ${JSON.stringify(metadata, null, 2)}
 
@@ -50,11 +52,18 @@ export async function run() {
    * Insert your Outlook code here
    */
 
-  //const item = Office.context.mailbox.item;
+  const item = Office.context.mailbox.item;
+
+  const metadata = {
+    sender: item.from?.emailAddress,
+    subject: item.subject,
+    hasAttachments: item.attachments.length > 0
+  };
+
   Office.context.mailbox.item.body.getAsync(
     "text",
     { asyncContext: "This is passed to the callback" },
-    function callback(result) {
+    async function callback(result) {
       // Do something with the result.
 
       let insertAt = document.getElementById("item-subject");
@@ -63,6 +72,11 @@ export async function run() {
       insertAt.appendChild(document.createElement("br"));
       insertAt.appendChild(document.createTextNode(result.value));
       insertAt.appendChild(document.createElement("br"));
+
+      const results = await analyze(result.value, metadata);
+
+      // DO SOMETHING WITH RESULTS
+
     }
   );
 }
