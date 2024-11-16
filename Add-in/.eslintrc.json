@@ -1,8 +1,10 @@
 {
   "plugins": [
-    "office-addins"
+    "node",
+    "office-addins"  
   ],
   "extends": [
+    "plugin:node/recommended",
     "plugin:office-addins/recommended"
   ]
 }

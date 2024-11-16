@@ -5,8 +5,10 @@
 
 /* global document, Office */
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // importing Google AI SDK
-const { GEMINI_API_KEY } = require("../../config.js");
 // API key is not pushed to github for security
+// TODO Figure out a solution for production
+// Dotenv doesn't work in broswer
+const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
 
 Office.onReady((info) => {
