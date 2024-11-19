@@ -4,8 +4,8 @@
     "manifestVersion": "1.17",
     "version": "1.0.0",
     "name": {
-        "short": "Add-in",
-        "full": "Contoso Task Pane Add-in"
+        "short": "PhishNet",
+        "full": "PhishNet"
     },
     "description": {
         "short": "A template to get started.",
@@ -105,7 +105,7 @@
                             "groups": [
                                 {
                                     "id": "msgReadGroup",
-                                    "label": "Contoso Add-in",
+                                    "label": "PhishNet",
                                     "icons": [
                                         {
                                             "size": 16,
