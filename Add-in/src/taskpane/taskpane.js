@@ -30,8 +30,8 @@ async function analyze(emailContent, metadata) {
 
     // Prompt engineering:
     const prompt = `
-    You are a cybersecurity expert analyzing an email for phishing attempts.
     Analyze the following email content and metadata for signs of phishing.
+    Err on the side of caution.
     Provide your response in the following format:
     - Confidence Score: (0-100, where 100 is definitely phishing)
     - Suspicious Elements: (bullet point list)
@@ -82,6 +82,7 @@ export async function run() {
       const results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
       insertAt.appendChild(document.createElement("br"));
       insertAt.appendChild(document.createTextNode(results)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      console.log(results);
       insertAt.appendChild(document.createElement("br"));
     }
   );
