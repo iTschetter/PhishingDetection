@@ -11,6 +11,8 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // importing Go
 const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
 
+let analysisHasOccurred = false;
+
 Office.onReady((info) => {
   // Occurs when everything is fully loaded (i.e. when ready)
   if (info.host === Office.HostType.Outlook) {
@@ -51,12 +53,16 @@ async function analyze(emailContent, metadata) {
     return response.text();
   } catch (error) {
     // Error handling
-    console.error("Error: ", error);
+    console.error("Error: ", error.message);
     return "Error analyzing email";
   }
 }
 
 export async function run() {
+  
+  if(analysisHasOccurred){
+    return;
+  }
   // Occurs when the "run" button is pressed
 
   const item = Office.context.mailbox.item; // Current email item selected by user
@@ -84,6 +90,7 @@ export async function run() {
       insertAt.appendChild(document.createTextNode(results)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
       console.log(results);
       insertAt.appendChild(document.createElement("br"));
+      analysisHasOccurred = true;
     }
   );
 }
