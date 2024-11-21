@@ -8,14 +8,14 @@
         "full": "PhishNet"
     },
     "description": {
-        "short": "A template to get started.",
-        "full": "This is the template to get started."
+        "short": "A phishing detection and training Add-in.",
+        "full": "A phishing detection and training Add-in."
     },
     "developer": {
-        "name": "Contoso",
-        "websiteUrl": "https://www.contoso.com",
-        "privacyUrl": "https://www.contoso.com/privacy",
-        "termsOfUseUrl": "https://www.contoso.com/servicesagreement"
+        "name": "Group3",
+        "websiteUrl": "https://github.com/dsu-cs/group-projects-group-3",
+        "privacyUrl": "https://github.com/dsu-cs/group-projects-group-3",
+        "termsOfUseUrl": "https://github.com/dsu-cs/group-projects-group-3"
     },
     "icons": {
         "outline": "assets/outline.png",
@@ -72,7 +72,7 @@
                         {
                             "id": "TaskPaneRuntimeShow",
                             "type": "openPage",
-                            "pinnable": false,
+                            "pinnable": true,
                             "view": "dashboard"
                         }
                     ]

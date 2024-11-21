@@ -5,13 +5,13 @@
   },
   "plugins": [
     "office-addins",
-    "jest"
+    "jest",
+    "node"
   ],
   "extends": [
-    "plugin:node/recommended",
+
     "plugin:office-addins/recommended",
     "plugin:jest/recommended",
-    "node",
-    "office-addins"  
+    "plugin:node/recommended"
   ]
 }
