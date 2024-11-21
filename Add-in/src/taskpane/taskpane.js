@@ -32,14 +32,24 @@ async function analyze(emailContent, metadata) {
 
     // Prompt engineering:
     const prompt = `
-    Analyze the following email content and metadata for signs of phishing.
-    Err on the side of caution.
-    Provide your response in the following format:
-    - Confidence Score: (0-100, where 100 is definitely phishing)
-    - Suspicious Elements: (bullet point list)
-    - Reasoning: (brief explanation)
+    For each email provided, analyze it and return a JSON response with exactly these fields:
+    - confidence: integer from 0-100 representing how confident you are that this is a scam
+    - elements: array of strings listing specific elements that indicate potential fraud
+    - reasoning: string explaining your detailed analysis of why these elements are suspicious
 
-    Please response with a readable JSON object with no additional text. The JSON elements should be the three items previously listed.
+    Format all responses as valid JSON objects with these exact field names. Make sure you don't return a 
+
+    Example response:
+    {
+        "confidence": 85,
+        "elements": [
+            "Urgency in subject line",
+            "Grammatical errors",
+            "Request for sensitive information",
+            "Suspicious sender address"
+        ],
+        "reasoning": "The email exhibits multiple red flags typical of scam attempts. The urgent subject line creates pressure to act quickly. Multiple grammatical errors suggest non-native English speakers. The request for sensitive banking information is never legitimate from real institutions. The sender address mimics but doesn't exactly match the real company domain."
+    }
 
      Email Metadata:
      ${JSON.stringify(metadata, null, 2)}
@@ -55,6 +65,23 @@ async function analyze(emailContent, metadata) {
     // Error handling
     console.error("Error: ", error.message);
     return "Error analyzing email";
+  }
+}
+
+function cleanGeminiResponse(response) {
+  // Removing backticks and 'json' identifier
+  let cleaning = response.replace(/```json/g, '').replace(/```/g, '').trim();
+  
+  // Handling any potential leading or trailing whitespace and newlines
+  cleaning = cleaning.replace(/^\s+|\s+$/g, '');
+  
+  try {
+      // Parsing the cleaned string into a JSON object
+      const cleaned = JSON.parse(cleaning);
+      return cleaned;
+  } catch (error) {
+      console.error('Error parsing JSON:', error);
+      throw error;
   }
 }
 
@@ -84,12 +111,20 @@ export async function run() {
       let insertAt = document.getElementById("item-subject");
       insertAt.innerHTML = ""; //Clear previous results
 
-      let label = document.createElement("b").appendChild(document.createTextNode("Ai Analysis: "));
+      let label = document.createElement("b").appendChild(document.createTextNode("AI Analysis: "));
       insertAt.appendChild(label);
-      const results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
+      let results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
+      const cleaned = cleanGeminiResponse(results);
       insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(results)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      insertAt.appendChild(document.createTextNode(cleaned.confidence)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
       insertAt.appendChild(document.createElement("br"));
+      insertAt.appendChild(document.createElement("br"));
+      insertAt.appendChild(document.createTextNode(cleaned.elements)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      insertAt.appendChild(document.createElement("br"));
+      insertAt.appendChild(document.createElement("br"));
+      insertAt.appendChild(document.createTextNode(cleaned.reasoning)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      insertAt.appendChild(document.createElement("br"));
+
       // Enable Run button
       // TODO move this to onFocus when feature is ready
       analysisHasOccurred = false;
