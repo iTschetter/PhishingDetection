@@ -39,7 +39,7 @@ async function analyze(emailContent, metadata) {
     - Suspicious Elements: (bullet point list)
     - Reasoning: (brief explanation)
 
-    Please response with a JSON object with no additional text. The JSON elements should be the three items previously listed.
+    Please response with a readable JSON object with no additional text. The JSON elements should be the three items previously listed.
 
      Email Metadata:
      ${JSON.stringify(metadata, null, 2)}
