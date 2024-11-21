@@ -58,15 +58,15 @@ async function analyze(emailContent, metadata) {
   }
 }
 
+/* eslint-disable node/no-unsupported-features/es-syntax */
 export async function run() {
-  
-  if(analysisHasOccurred){
+  // Occurs when the "run" button is pressed
+  if (analysisHasOccurred) {
     return;
   }
-  // Occurs when the "run" button is pressed
+  analysisHasOccurred = true;
 
   const item = Office.context.mailbox.item; // Current email item selected by user
-
   const metadata = {
     // Grabs the address, subject, and whether or not there is attachments
     sender: item.from?.emailAddress,
@@ -80,17 +80,19 @@ export async function run() {
     { asyncContext: "This is passed to the callback" },
     async function callback(result) {
       // Passing the email as "result"
-
+      
       let insertAt = document.getElementById("item-subject");
-      let label = document.createElement("b").appendChild(document.createTextNode("Subject: "));
-      insertAt.appendChild(label);
+      insertAt.innerHTML = ""; //Clear previous results
 
+      let label = document.createElement("b").appendChild(document.createTextNode("Ai Analysis: "));
+      insertAt.appendChild(label);
       const results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
       insertAt.appendChild(document.createElement("br"));
       insertAt.appendChild(document.createTextNode(results)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      console.log(results);
       insertAt.appendChild(document.createElement("br"));
-      analysisHasOccurred = true;
+      // Enable Run button
+      // TODO move this to onFocus when feature is ready
+      analysisHasOccurred = false;
     }
   );
 }
