@@ -116,13 +116,22 @@ export async function run() {
       let results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
       const cleaned = cleanGeminiResponse(results);
       insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(cleaned.confidence)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      insertAt.appendChild(document.createTextNode(`Confidence Score: ${cleaned.confidence}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
       insertAt.appendChild(document.createElement("br"));
       insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(cleaned.elements)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(cleaned.reasoning)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+      if (cleaned.elements.length > 0) {
+        insertAt.appendChild(document.createTextNode(`Suspicious Elements: `)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
+        const items = cleaned.elements;
+        const ul = document.createElement("ul");
+        items.forEach( item=> {
+          const lst = document.createElement('li');
+          lst.textContent = item;
+          ul.appendChild(lst);
+        });
+        insertAt.appendChild(ul);
+        insertAt.appendChild(document.createElement("br"));
+      }
+      insertAt.appendChild(document.createTextNode(`Reason: ${cleaned.reasoning}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
       insertAt.appendChild(document.createElement("br"));
 
       // Enable Run button
