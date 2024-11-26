@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const sinon = require('sinon');
 const { JSDOM } = require('jsdom');
 
@@ -82,16 +81,18 @@ describe('Email Analysis Add-in', () => {
       const result = await analyze(emailContent, metadata);
       const parsed = JSON.parse(result);
 
-      expect(parsed).to.have.property('confidence').that.is.a('number');
-      expect(parsed).to.have.property('elements').that.is.an('array');
-      expect(parsed).to.have.property('reasoning').that.is.a('string');
+      // Using Jest expect instead of Chai
+      expect(parsed).toHaveProperty('confidence');
+      expect(typeof parsed.confidence).toBe('number');
+      expect(Array.isArray(parsed.elements)).toBe(true);
+      expect(typeof parsed.reasoning).toBe('string');
     });
 
     it('should handle API errors gracefully', async () => {
       mockGenerateContent.rejects(new Error('API Error'));
       
       const result = await analyze('content', {});
-      expect(result).to.equal('Error analyzing email');
+      expect(result).toBe('Error analyzing email');
     });
   });
 
@@ -100,7 +101,7 @@ describe('Email Analysis Add-in', () => {
       const response = '```json\n{"confidence": 85,"elements": [],"reasoning": "test"}\n```';
       const result = cleanGeminiResponse(response);
       
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         confidence: 85,
         elements: [],
         reasoning: 'test'
@@ -109,7 +110,7 @@ describe('Email Analysis Add-in', () => {
 
     it('should throw error for invalid JSON', () => {
       const response = '```json\ninvalid json\n```';
-      expect(() => cleanGeminiResponse(response)).to.throw();
+      expect(() => cleanGeminiResponse(response)).toThrow();
     });
   });
 
@@ -127,15 +128,15 @@ describe('Email Analysis Add-in', () => {
     it('should not run analysis if previous analysis is still running', async () => {
       global.analysisHasOccurred = true;
       await run();
-      expect(mockGetGenerativeModel.called).to.be.false;
+      expect(mockGetGenerativeModel.called).toBeFalsy();
     });
 
     it('should update DOM with analysis results', async () => {
       await run();
       
       const resultDiv = document.getElementById('item-subject');
-      expect(resultDiv.innerHTML).to.include('Confidence Score: 85');
-      expect(resultDiv.innerHTML).to.include('Test reasoning');
+      expect(resultDiv.innerHTML).toContain('Confidence Score: 85');
+      expect(resultDiv.innerHTML).toContain('Test reasoning');
     });
 
     it('should handle empty suspicious elements array', async () => {
@@ -152,7 +153,7 @@ describe('Email Analysis Add-in', () => {
       await run();
       
       const resultDiv = document.getElementById('item-subject');
-      expect(resultDiv.innerHTML).to.not.include('Suspicious Elements:');
+      expect(resultDiv.innerHTML).not.toContain('Suspicious Elements:');
     });
   });
 });
