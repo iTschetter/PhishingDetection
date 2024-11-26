@@ -69,6 +69,11 @@ async function analyze(emailContent, metadata) {
 }
 
 function cleanGeminiResponse(response) {
+
+  if (response === 'Error analyzing email') {
+    return response;
+  }
+
   // Removing backticks and 'json' identifier
   let cleaning = response.replace(/```json/g, '').replace(/```/g, '').trim();
   
@@ -115,15 +120,29 @@ export async function run() {
       insertAt.appendChild(label);
       let results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
       const cleaned = cleanGeminiResponse(results);
+
+      // Add defensive checks
+      if (typeof cleaned === 'string') {
+        // It's an error message
+        insertAt.appendChild(document.createTextNode(cleaned));
+        analysisHasOccurred = false;
+        return;
+      }
+
       insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(`Confidence Score: ${cleaned.confidence}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createElement("br"));
-      if (cleaned.elements.length > 0) {
-        insertAt.appendChild(document.createTextNode(`Suspicious Elements: `)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-        const items = cleaned.elements;
+      
+      // Check if confidence exists
+      if (cleaned.confidence !== undefined) {
+        insertAt.appendChild(document.createTextNode(`Confidence Score: ${cleaned.confidence}`));
+        insertAt.appendChild(document.createElement("br"));
+        insertAt.appendChild(document.createElement("br"));
+      }
+
+      // Check if elements exists and is an array
+      if (cleaned.elements && Array.isArray(cleaned.elements) && cleaned.elements.length > 0) {
+        insertAt.appendChild(document.createTextNode(`Suspicious Elements: `));
         const ul = document.createElement("ul");
-        items.forEach( item=> {
+        cleaned.elements.forEach(item => {
           const lst = document.createElement('li');
           lst.textContent = item;
           ul.appendChild(lst);
@@ -131,11 +150,13 @@ export async function run() {
         insertAt.appendChild(ul);
         insertAt.appendChild(document.createElement("br"));
       }
-      insertAt.appendChild(document.createTextNode(`Reason: ${cleaned.reasoning}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      insertAt.appendChild(document.createElement("br"));
 
-      // Enable Run button
-      // TODO move this to onFocus when feature is ready
+      // Check if reasoning exists
+      if (cleaned.reasoning) {
+        insertAt.appendChild(document.createTextNode(`Reason: ${cleaned.reasoning}`));
+        insertAt.appendChild(document.createElement("br"));
+      }
+
       analysisHasOccurred = false;
     }
   );

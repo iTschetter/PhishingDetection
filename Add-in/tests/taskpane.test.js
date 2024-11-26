@@ -2,7 +2,18 @@ const sinon = require('sinon');
 const { JSDOM } = require('jsdom');
 
 // Setup DOM environment
-const dom = new JSDOM('<!DOCTYPE html><div id="sideload-msg"></div><div id="app-body"></div><div id="item-subject"></div>');
+const dom = new JSDOM(`
+  <!DOCTYPE html>
+  <html>
+    <body>
+      <div id="sideload-msg"></div>
+      <div id="app-body"></div>
+      <div id="item-subject"></div>
+      <button id="run"></button>
+    </body>
+  </html>
+`);
+
 global.document = dom.window.document;
 global.window = dom.window;
 
@@ -23,6 +34,8 @@ global.Office = {
     }
   }
 };
+
+const { analyze, cleanGeminiResponse, run } = require('../src/taskpane/taskpane');
 
 // Mock console methods
 global.console = {
