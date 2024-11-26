@@ -11,7 +11,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // importing Go
 const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
 
-let analysisHasOccurred = false;
 
 Office.onReady((info) => {
   // Occurs when everything is fully loaded (i.e. when ready)
@@ -23,7 +22,7 @@ Office.onReady((info) => {
   }
 });
 
-async function analyze(emailContent, metadata) {
+export async function analyze(emailContent, metadata) {
   // Medium of communication with Gemini
   try {
     const model = genAI.getGenerativeModel({
@@ -68,7 +67,7 @@ async function analyze(emailContent, metadata) {
   }
 }
 
-function cleanGeminiResponse(response) {
+export function cleanGeminiResponse(response) {
 
   if (response === 'Error analyzing email') {
     return response;
