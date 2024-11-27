@@ -108,34 +108,39 @@ export async function run() {
     async function callback(result) {
       // Passing the email as "result"
       
-      let insertAt = document.getElementById("item-subject");
-      insertAt.innerHTML = ""; //Clear previous results
-
-      let label = document.createElement("b").appendChild(document.createTextNode("AI Analysis: "));
-      insertAt.appendChild(label);
-      let results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
+      const insertAt = document.getElementById("item-subject");
+      insertAt.innerHTML = ""; // Clear previous results
+      
+      const results = await analyze(result.value, metadata);
       const cleaned = cleanGeminiResponse(results);
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createTextNode(`Confidence Score: ${cleaned.confidence}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      insertAt.appendChild(document.createElement("br"));
-      insertAt.appendChild(document.createElement("br"));
-      if (cleaned.elements.length > 0) {
-        insertAt.appendChild(document.createTextNode(`Suspicious Elements: `)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-        const items = cleaned.elements;
-        const ul = document.createElement("ul");
-        items.forEach( item=> {
-          const lst = document.createElement('li');
-          lst.textContent = item;
-          ul.appendChild(lst);
-        });
-        insertAt.appendChild(ul);
-        insertAt.appendChild(document.createElement("br"));
-      }
-      insertAt.appendChild(document.createTextNode(`Reason: ${cleaned.reasoning}`)); // Displaying the results from gemini's analysis of the body of the email into the UI (app-body)
-      insertAt.appendChild(document.createElement("br"));
+      
+      // Create the HTML structure
+      const html = `
+        <div class="results">
+          <div class="sectionContainer">
+            <div class="containerTitle">Risk Confidence Score:</div>
+            <div class="confidenceScore ${cleaned.confidence >= 75 ? 'highRisk' : cleaned.confidence >= 50 ? 'mediumRisk' : 'lowRisk'}">
+              ${cleaned.confidence >= 75 ? 'High' : cleaned.confidence >= 50 ? 'Medium' : 'Low'} (${cleaned.confidence}%)
+            </div>
+          </div>
 
-      // Enable Run button
-      // TODO move this to onFocus when feature is ready
+          ${cleaned.elements.length > 0 ? `
+            <div class="sectionContainer">
+              <div class="containerTitle">Suspicious Elements:</div>
+              <ul class="elementsList">
+                ${cleaned.elements.map(element => `<li>${element}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+
+          <div class="sectionContainer">
+            <div class="containerTitle">AI Analysis:</div>
+            <div class="AIAnalysisText">${cleaned.reasoning}</div>
+          </div>
+        </div>
+      `;
+      
+      insertAt.innerHTML = html;
       analysisHasOccurred = false;
     }
   );
