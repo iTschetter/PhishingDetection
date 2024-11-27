@@ -55,19 +55,11 @@
  .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
      margin-right: 10px;
  }
- 
- .ms-welcome__action.ms-Button--hero {
-     margin-top: 30px;
- }
- 
-.ms-Button.ms-Button--hero .ms-Button-label {
-  color: #0078d7;
-}
 
-.ms-Button.ms-Button--hero:hover .ms-Button-label,
-.ms-Button.ms-Button--hero:focus .ms-Button-label{
-  color: #005a9e;
-  cursor: pointer;
+.ms-font-su {
+    font-size: 35px;
+    font-weight: 500;
+    color: #6089b0;
 }
 
 b {
@@ -75,9 +67,8 @@ b {
 }
 
 @media (prefers-color-scheme: dark) {
-    /* Dark theme styles go here */
     .ms-Fabric {
-        color: #eee;
+        color: #000000;
     }
   }
 
@@ -133,7 +124,7 @@ color: #333;
 }
 
 .AIAnalysisText {
-font-size: 10px;
+font-size: 13px;
 }
 
 .containerTitle {
