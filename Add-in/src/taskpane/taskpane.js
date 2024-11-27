@@ -10,7 +10,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // importing Go
 // Dotenv doesn't work in broswer
 const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
-
 let analysisHasOccurred = false;
 
 Office.onReady((info) => {
@@ -23,7 +22,7 @@ Office.onReady((info) => {
   }
 });
 
-async function analyze(emailContent, metadata) {
+export async function analyze(emailContent, metadata) {
   // Medium of communication with Gemini
   try {
     const model = genAI.getGenerativeModel({
@@ -68,7 +67,12 @@ async function analyze(emailContent, metadata) {
   }
 }
 
-function cleanGeminiResponse(response) {
+export function cleanGeminiResponse(response) {
+
+  if (response === 'Error analyzing email') {
+    return response;
+  }
+
   // Removing backticks and 'json' identifier
   let cleaning = response.replace(/```json/g, '').replace(/```/g, '').trim();
   
@@ -118,7 +122,7 @@ export async function run() {
       const html = `
         <div class="results">
           <div class="sectionContainer">
-            <div class="containerTitle">Risk Confidence Score:</div>
+            <div class="containerTitleSpecial">Risk Confidence Score:</div>
             <div class="confidenceScore ${cleaned.confidence >= 75 ? 'highRisk' : cleaned.confidence >= 50 ? 'mediumRisk' : 'lowRisk'}">
               ${cleaned.confidence >= 75 ? 'High' : cleaned.confidence >= 50 ? 'Medium' : 'Low'} (${cleaned.confidence}%)
             </div>
