@@ -10,7 +10,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // importing Go
 // Dotenv doesn't work in broswer
 const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
-
+let analysisHasOccurred = false;
 
 Office.onReady((info) => {
   // Occurs when everything is fully loaded (i.e. when ready)
@@ -112,50 +112,39 @@ export async function run() {
     async function callback(result) {
       // Passing the email as "result"
       
-      let insertAt = document.getElementById("item-subject");
-      insertAt.innerHTML = ""; //Clear previous results
-
-      let label = document.createElement("b").appendChild(document.createTextNode("AI Analysis: "));
-      insertAt.appendChild(label);
-      let results = await analyze(result.value, metadata); // Calling Gemini to analyze the email (result.value is the body)
-      const cleaned = cleanGeminiResponse(results);
-
-      // Add defensive checks
-      if (typeof cleaned === 'string') {
-        // It's an error message
-        insertAt.appendChild(document.createTextNode(cleaned));
-        analysisHasOccurred = false;
-        return;
-      }
-
-      insertAt.appendChild(document.createElement("br"));
+      const insertAt = document.getElementById("item-subject");
+      insertAt.innerHTML = ""; // Clear previous results
       
-      // Check if confidence exists
-      if (cleaned.confidence !== undefined) {
-        insertAt.appendChild(document.createTextNode(`Confidence Score: ${cleaned.confidence}`));
-        insertAt.appendChild(document.createElement("br"));
-        insertAt.appendChild(document.createElement("br"));
-      }
+      const results = await analyze(result.value, metadata);
+      const cleaned = cleanGeminiResponse(results);
+      
+      // Create the HTML structure
+      const html = `
+        <div class="results">
+          <div class="sectionContainer">
+            <div class="containerTitleSpecial">Risk Confidence Score:</div>
+            <div class="confidenceScore ${cleaned.confidence >= 75 ? 'highRisk' : cleaned.confidence >= 50 ? 'mediumRisk' : 'lowRisk'}">
+              ${cleaned.confidence >= 75 ? 'High' : cleaned.confidence >= 50 ? 'Medium' : 'Low'} (${cleaned.confidence}%)
+            </div>
+          </div>
 
-      // Check if elements exists and is an array
-      if (cleaned.elements && Array.isArray(cleaned.elements) && cleaned.elements.length > 0) {
-        insertAt.appendChild(document.createTextNode(`Suspicious Elements: `));
-        const ul = document.createElement("ul");
-        cleaned.elements.forEach(item => {
-          const lst = document.createElement('li');
-          lst.textContent = item;
-          ul.appendChild(lst);
-        });
-        insertAt.appendChild(ul);
-        insertAt.appendChild(document.createElement("br"));
-      }
+          ${cleaned.elements.length > 0 ? `
+            <div class="sectionContainer">
+              <div class="containerTitle">Suspicious Elements:</div>
+              <ul class="elementsList">
+                ${cleaned.elements.map(element => `<li>${element}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
 
-      // Check if reasoning exists
-      if (cleaned.reasoning) {
-        insertAt.appendChild(document.createTextNode(`Reason: ${cleaned.reasoning}`));
-        insertAt.appendChild(document.createElement("br"));
-      }
-
+          <div class="sectionContainer">
+            <div class="containerTitle">AI Analysis:</div>
+            <div class="AIAnalysisText">${cleaned.reasoning}</div>
+          </div>
+        </div>
+      `;
+      
+      insertAt.innerHTML = html;
       analysisHasOccurred = false;
     }
   );

@@ -80,3 +80,75 @@ b {
         color: #eee;
     }
   }
+
+
+.results {
+padding: 15px;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.sectionContainer {
+margin-bottom: 20px;
+padding: 13px;
+border-radius: 5px;
+background-color: #ffffff;
+border: 1px solid #e1e1e1;
+}
+
+.confidenceScore {
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+color: #000000;
+}
+
+.highRisk {
+color: #df1c2f;
+}
+
+.mediumRisk {
+color: #fdad36;
+}
+
+.lowRisk {
+color: #14af38;
+}
+
+.elementsList {
+list-style-type: none;
+padding-left: 0;
+}
+
+.elementsList li {
+padding: 5px 0;
+padding-left: 20px;
+position: relative;
+}
+
+.elementsList li:before {
+content: "-";
+position: absolute;
+left: 5px;
+color: #333;
+}
+
+.AIAnalysisText {
+font-size: 10px;
+}
+
+.containerTitle {
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.containerTitleSpecial {
+font-size: 18px;
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
