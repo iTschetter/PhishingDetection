@@ -12,15 +12,23 @@ const { GEMINI_API_KEY } = require("../../config.js");
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY); // Creates a new instance, using our API key, of the Gemini AI
 let analysisHasOccurred = false;
 
-Office.onReady((info) => {
-  // Occurs when everything is fully loaded (i.e. when ready)
-  if (info.host === Office.HostType.Outlook) {
-    // Ensuring the host application is outlook
-    document.getElementById("sideload-msg").style.display = "none"; // Hides sideload message
-    document.getElementById("app-body").style.display = "flex"; // Makes the main app body visible with flex display
-    document.getElementById("run").onclick = run; // Sets up a button titled "run"
+Office.onReady( (info) => {
+  if ( info.host === Office.HostType.Outlook ) {
+    document.getElementById("sideload-msg").style.display = "none";
+    document.getElementById("app-body").style.display = "flex";
+
+    // event handler for item selection
+    Office.context.mailbox.addHandlerAsync( Office.EventType.ItemChanged , itemChangedHandler );
+
+    // run ai analysis for the email
+    run();
   }
 });
+
+// Handler function for when email selection changes
+function itemChangedHandler(eventArgs) {
+  run();
+}
 
 export async function analyze(emailContent, metadata) {
   // Medium of communication with Gemini
@@ -138,7 +146,7 @@ export async function run() {
           ` : ''}
 
           <div class="sectionContainer">
-            <div class="containerTitle">AI Analysis:</div>
+            <div class="containerTitle">Analysis:</div>
             <div class="AIAnalysisText">${cleaned.reasoning}</div>
           </div>
         </div>
