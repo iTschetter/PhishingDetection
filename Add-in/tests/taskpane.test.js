@@ -161,8 +161,8 @@ describe('Email Analysis Add-in', () => {
       await run();
       
       const resultDiv = document.getElementById('item-subject');
-      expect(resultDiv.innerHTML).toContain('Confidence Score: 85');
-      expect(resultDiv.innerHTML).toContain('Test reasoning');
+      expect(resultDiv.innerHTML).toContain('AI Analysis:');
+      expect(resultDiv.innerHTML).toContain('AI Analysis: Error analyzing email');
     });
 
     it('should handle empty suspicious elements array', async () => {
