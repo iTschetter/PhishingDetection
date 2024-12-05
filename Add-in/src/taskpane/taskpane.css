@@ -55,19 +55,11 @@
  .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
      margin-right: 10px;
  }
- 
- .ms-welcome__action.ms-Button--hero {
-     margin-top: 30px;
- }
- 
-.ms-Button.ms-Button--hero .ms-Button-label {
-  color: #0078d7;
-}
 
-.ms-Button.ms-Button--hero:hover .ms-Button-label,
-.ms-Button.ms-Button--hero:focus .ms-Button-label{
-  color: #005a9e;
-  cursor: pointer;
+.ms-font-su {
+    font-size: 35px;
+    font-weight: 500;
+    color: #6089b0;
 }
 
 b {
@@ -75,8 +67,79 @@ b {
 }
 
 @media (prefers-color-scheme: dark) {
-    /* Dark theme styles go here */
     .ms-Fabric {
-        color: #eee;
+        color: #000000;
     }
   }
+
+
+.results {
+padding: 15px;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.sectionContainer {
+margin-bottom: 20px;
+padding: 13px;
+border-radius: 5px;
+background-color: #ffffff;
+border: 1px solid #e1e1e1;
+}
+
+.confidenceScore {
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+color: #000000;
+}
+
+.highRisk {
+color: #df1c2f;
+}
+
+.mediumRisk {
+color: #fdad36;
+}
+
+.lowRisk {
+color: #14af38;
+}
+
+.elementsList {
+list-style-type: none;
+padding-left: 0;
+}
+
+.elementsList li {
+padding: 5px 0;
+padding-left: 20px;
+position: relative;
+}
+
+.elementsList li:before {
+content: "-";
+position: absolute;
+left: 5px;
+color: #333;
+}
+
+.AIAnalysisText {
+font-size: 13px;
+}
+
+.containerTitle {
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.containerTitleSpecial {
+font-size: 18px;
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
