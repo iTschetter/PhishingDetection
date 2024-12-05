@@ -125,6 +125,12 @@ export async function run() {
       
       const results = await analyze(result.value, metadata);
       const cleaned = cleanGeminiResponse(results);
+
+      if (typeof cleaned === 'string') {
+        insertAt.innerHTML = `<div class="error">${cleaned}</div>`;
+        analysisHasOccurred = false;
+        return;
+      }
       
       // Create the HTML structure
       const html = `
