@@ -37,3 +37,6 @@ module.exports = config;
 
 Ensure that you have installed jest, chai, sinon, and jsdom. To do so, run the following command:
 `npm install --save-dev jest chai sinon jsdom`.
+
+To run the tests, first make sure you are in the 'Add-in' directory, then run the following command:
+'npm test'
