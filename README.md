@@ -7,8 +7,7 @@
 1. Open repo in VS code
 1. Open terminal
 1.  > `git clone https://github.com/dsu-cs/group-projects-group-3.git`
-1.  > `git checkout dev`
-1.  > `git pull`
+1.  > `cd group-projects-group-3'
 1.  > `cd Add-in`
 1.  > `npm install`
 1.  > In the Add-in directory, create a config.js file with your new API key. It should look like this
