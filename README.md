@@ -5,7 +5,13 @@
 1. Install Node.js https://nodejs.org/en/download/prebuilt-installer
 1. Install npm https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 1. Open repo in VS code
-1. In the Add-in directory, create a config.js file with your new API key. It should look like this
+1. Open terminal
+1.  > `git clone https://github.com/dsu-cs/group-projects-group-3.git`
+1.  > `git checkout dev`
+1.  > `git pull`
+1.  > `cd Add-in`
+1.  > `npm install`
+1.  > In the Add-in directory, create a config.js file with your new API key. It should look like this
 ```// config.js
 const config = {
   GEMINI_API_KEY: "API KEY GOES HERE",
@@ -13,12 +19,6 @@ const config = {
 
 module.exports = config;
 ```
-1. Open terminal
-1.  > `git clone https://github.com/dsu-cs/group-projects-group-3.git`
-1.  > `git checkout dev`
-1.  > `git pull`
-1.  > `cd Add-in`
-1.  > `npm install`
 1.  > `npm run start`
 1. Open outlook client or https://outlook.office.com/mail/
 1. Select an email
