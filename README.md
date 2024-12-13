@@ -7,7 +7,7 @@
 1. Open repo in VS code
 1. Open terminal
 1.  > `git clone https://github.com/dsu-cs/group-projects-group-3.git`
-1.  > `cd group-projects-group-3'
+1.  > `cd group-projects-group-3`
 1.  > `cd Add-in`
 1.  > `npm install`
 1.  > In the Add-in directory, create a config.js file with your new API key. It should look like this
@@ -19,6 +19,7 @@ const config = {
 module.exports = config;
 ```
 1.  > `npm run start` (Make sure you do this when in the Add-in directory)
+    > After doing this for the first time, outlook should open and prompt you to sign in with whatever email account you want to use. This part can cause errors so be careful when going through this step. 
 1. Open outlook client or https://outlook.office.com/mail/
 1. Select an email
 1. Locate the App button or drop down option
