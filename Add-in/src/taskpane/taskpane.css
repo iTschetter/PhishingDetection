@@ -1,0 +1,145 @@
+/* 
+ * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
+
+ html,
+ body {
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+ }
+ 
+ ul {
+     margin: 0;
+     padding: 2;
+ }
+ 
+ .ms-welcome__header {
+    padding: 20px;
+    padding-bottom: 30px;
+    padding-top: 100px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .ms-welcome__main {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex: 1 0 0;
+    flex: 1 0 0;
+    padding: 10px 20px;
+ }
+ 
+ .ms-welcome__features {
+     list-style-type: none;
+     margin-top: 20px;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem {
+     padding-bottom: 20px;
+     display: -webkit-flex;
+     display: flex;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
+     margin-right: 10px;
+ }
+
+.ms-font-su {
+    font-size: 35px;
+    font-weight: 500;
+    color: #6089b0;
+}
+
+b {
+    font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+    .ms-Fabric {
+        color: #000000;
+    }
+  }
+
+
+.results {
+padding: 15px;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.sectionContainer {
+margin-bottom: 20px;
+padding: 13px;
+border-radius: 5px;
+background-color: #ffffff;
+border: 1px solid #e1e1e1;
+}
+
+.confidenceScore {
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+color: #000000;
+}
+
+.highRisk {
+color: #df1c2f;
+}
+
+.mediumRisk {
+color: #fdad36;
+}
+
+.lowRisk {
+color: #14af38;
+}
+
+.elementsList {
+list-style-type: none;
+padding-left: 0;
+}
+
+.elementsList li {
+padding: 5px 0;
+padding-left: 20px;
+position: relative;
+}
+
+.elementsList li:before {
+content: "-";
+position: absolute;
+left: 5px;
+color: #333;
+}
+
+.AIAnalysisText {
+font-size: 13px;
+}
+
+.containerTitle {
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.containerTitleSpecial {
+font-size: 18px;
+text-align: center;
+font-weight: bold;
+margin-bottom: 10px;
+color: #333;
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
