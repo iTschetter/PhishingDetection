@@ -19,7 +19,7 @@ const config = {
 
 module.exports = config;
 ```
-1.  > `npm run start`
+1.  > `npm run start` (Make sure you do this when in the Add-in directory)
 1. Open outlook client or https://outlook.office.com/mail/
 1. Select an email
 1. Locate the App button or drop down option
