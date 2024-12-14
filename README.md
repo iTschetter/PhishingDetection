@@ -19,7 +19,7 @@ const config = {
 module.exports = config;
 ```
 1.  > `npm run start` (Make sure you do this when in the Add-in directory).
-After doing this for the first time, outlook should open and prompt you to sign in with whatever email account you want to use. We have encountered errors on this step before. Hence, we recommend to try using the desktop version of outlook first. If that doesn't work, try the web application version. 
+After doing this for the first time, outlook should open and prompt you to sign in with whatever email account you want to use. We have encountered errors on this step before. Hence, we recommend trying  to use the desktop version of outlook first. If that doesn't work, try the web application version. 
 1. Open outlook client or https://outlook.office.com/mail/
 1. Select an email
 1. Locate the App button or drop down option (the location of the app button varys from the web client to the desktop client and also changes places even depending on how big you have the application on your screen, so if you can't find it you might just have to look around a bit).
