@@ -35,7 +35,7 @@ After doing this for the first time, outlook should open and prompt you to sign 
 
 ### Setting up the test suite
 
-Ensure that you have installed jest, chai, sinon, and jsdom. To do so, run the following command:
+Ensure that you have installed jest, chai, sinon, and jsdom. To do so, run the following command (in the Add-in directory):
 `npm install --save-dev jest chai sinon jsdom`.
 
 To run the tests, first make sure you are in the 'Add-in' directory, then run the following command:
