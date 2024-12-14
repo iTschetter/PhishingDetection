@@ -19,10 +19,10 @@ const config = {
 module.exports = config;
 ```
 1.  > `npm run start` (Make sure you do this when in the Add-in directory)
-    > After doing this for the first time, outlook should open and prompt you to sign in with whatever email account you want to use. This part can cause errors so be careful when going through this step. 
+After doing this for the first time, outlook should open and prompt you to sign in with whatever email account you want to use.
 1. Open outlook client or https://outlook.office.com/mail/
 1. Select an email
-1. Locate the App button or drop down option
+1. Locate the App button or drop down option (the location of the app button varys from the web client to the desktop client and also changes places even depending on how big you have the application on your screen, so if you can't find it you might just have to look around a bit).
    
      ![Screenshot 2024-12-13 142558](https://github.com/user-attachments/assets/79a8f5bd-e7a6-4195-b745-fdfb843d5794)
 1. Select Phishnet
